@@ -1,13 +1,7 @@
 <x-app-layout title="Добавить дату отгрузки">
 
 <div class="w-full">
-    @if ($errors->any())
-        <ul class="flex justify-center mb-3">
-            @foreach ($errors->all() as $error)
-                <li class="text-red-500 font-normal text-xs">{{$error}}</li>
-            @endforeach
-        </ul>
-    @endif
+    <x-validation-errors />
 
     <form class="w-52 mx-auto" action="{{route('shipment.store')}}" method="POST">
         @csrf

@@ -1,14 +1,8 @@
 <x-app-layout title="Создать деталь">
     <div class="w-full">
-        @if ($errors->any())
-        <ul class="flex justify-center mb-3">
-            @foreach ($errors->all() as $error)
-            <li class="text-red-500 font-normal text-xs">{{$error}}</li>
-            @endforeach
-        </ul>
-        @endif
+        <x-validation-errors />
 
-        <form class="w-56 mx-auto" action="{{route('detail.store')}}" method="POST">
+        <form class="w-56 mx-auto mb-5" action="{{route('detail.store')}}" method="POST">
             @csrf
             @method('post')
             <div class="mb-5">

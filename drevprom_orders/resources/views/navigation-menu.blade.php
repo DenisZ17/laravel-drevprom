@@ -1,219 +1,24 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
-    <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-mark class="block h-9 w-auto" />
-                    </a>
-                </div>
-
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                </div>
-            </div>
-
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <!-- Teams Dropdown -->
-                @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
-                    <div class="ms-3 relative">
-                        <x-dropdown align="right" width="60">
-                            <x-slot name="trigger">
-                                <span class="inline-flex rounded-md">
-                                    <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
-                                        {{ Auth::user()->currentTeam->name }}
-
-                                        <svg class="ms-2 -me-0.5 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
-                                        </svg>
-                                    </button>
-                                </span>
-                            </x-slot>
-
-                            <x-slot name="content">
-                                <div class="w-60">
-                                    <!-- Team Management -->
-                                    <div class="block px-4 py-2 text-xs text-gray-400">
-                                        {{ __('Manage Team') }}
-                                    </div>
-
-                                    <!-- Team Settings -->
-                                    <x-dropdown-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
-                                        {{ __('Team Settings') }}
-                                    </x-dropdown-link>
-
-                                    @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
-                                        <x-dropdown-link href="{{ route('teams.create') }}">
-                                            {{ __('Create New Team') }}
-                                        </x-dropdown-link>
-                                    @endcan
-
-                                    <!-- Team Switcher -->
-                                    @if (Auth::user()->allTeams()->count() > 1)
-                                        <div class="border-t border-gray-200"></div>
-
-                                        <div class="block px-4 py-2 text-xs text-gray-400">
-                                            {{ __('Switch Teams') }}
-                                        </div>
-
-                                        @foreach (Auth::user()->allTeams() as $team)
-                                            <x-switchable-team :team="$team" />
-                                        @endforeach
-                                    @endif
-                                </div>
-                            </x-slot>
-                        </x-dropdown>
-                    </div>
-                @endif
-
-                <!-- Settings Dropdown -->
-                <div class="ms-3 relative">
-                    {{-- <x-dropdown align="right" width="48">
-                        <x-slot name="trigger">
-                            @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                                <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
-                                    <img class="size-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
-                                </button>
-                            @else
-                                <span class="inline-flex rounded-md">
-                                    <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
-                                        {{ Auth::user()->name }}
-
-                                        <svg class="ms-2 -me-0.5 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                                        </svg>
-                                    </button>
-                                </span>
-                            @endif
-                        </x-slot>
-
-                        <x-slot name="content">
-                            <!-- Account Management -->
-                            <div class="block px-4 py-2 text-xs text-gray-400">
-                                {{ __('Manage Account') }}
-                            </div>
-
-                            <x-dropdown-link href="{{ route('profile.show') }}">
-                                {{ __('Profile') }}
-                            </x-dropdown-link>
-
-                            @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                                <x-dropdown-link href="{{ route('api-tokens.index') }}">
-                                    {{ __('API Tokens') }}
-                                </x-dropdown-link>
-                            @endif
-
-                            <div class="border-t border-gray-200"></div>
-
-                            <!-- Authentication -->
-                            <form method="POST" action="{{ route('logout') }}" x-data>
-                                @csrf
-
-                                <x-dropdown-link href="{{ route('logout') }}"
-                                         @click.prevent="$root.submit();">
-                                    {{ __('Log Out') }}
-                                </x-dropdown-link>
-                            </form>
-                        </x-slot>
-                    </x-dropdown> --}}
-                </div>
-            </div>
-
-            <!-- Hamburger -->
-            <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-                    <svg class="size-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-        </div>
-
-        <!-- Responsive Settings Options -->
-        {{-- <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="flex items-center px-4">
-                @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                    <div class="shrink-0 me-3">
-                        <img class="size-10 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
-                    </div>
-                @endif
-
-                {{-- <div>
-                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-                </div> --}}
-            </div>
-
-            {{-- <div class="mt-3 space-y-1">
-                <!-- Account Management -->
-                <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
-
-                @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                    <x-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">
-                        {{ __('API Tokens') }}
-                    </x-responsive-nav-link>
-                @endif
-
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}" x-data>
-                    @csrf
-
-                    <x-responsive-nav-link href="{{ route('logout') }}"
-                                   @click.prevent="$root.submit();">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
-                </form>
-
-                <!-- Team Management -->
-                @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
-                    <div class="border-t border-gray-200"></div>
-
-                    <div class="block px-4 py-2 text-xs text-gray-400">
-                        {{ __('Manage Team') }}
-                    </div>
-
-                    <!-- Team Settings -->
-                    <x-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}" :active="request()->routeIs('teams.show')">
-                        {{ __('Team Settings') }}
-                    </x-responsive-nav-link>
-
-                    @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
-                        <x-responsive-nav-link href="{{ route('teams.create') }}" :active="request()->routeIs('teams.create')">
-                            {{ __('Create New Team') }}
-                        </x-responsive-nav-link>
-                    @endcan
-
-                    <!-- Team Switcher -->
-                    @if (Auth::user()->allTeams()->count() > 1)
-                        <div class="border-t border-gray-200"></div>
-
-                        <div class="block px-4 py-2 text-xs text-gray-400">
-                            {{ __('Switch Teams') }}
-                        </div>
-
-                        @foreach (Auth::user()->allTeams() as $team)
-                            <x-switchable-team :team="$team" component="responsive-nav-link" />
-                        @endforeach
-                    @endif
-                @endif
-            </div> --}}
-        </div>
-    </div>
-</nav>
+<ul class="main__container flex justify-between items-center">
+    <li>
+        <x-nav-link :active="request()->routeIs('home')" href="{{route('home')}}">
+          <span class="mr-2"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3.33333 14.6666H12.6667C13.402 14.6666 14 14.0686 14 13.3333V3.33325C14 2.59792 13.402 1.99992 12.6667 1.99992H11.3333C11.3333 1.82311 11.2631 1.65354 11.1381 1.52851C11.013 1.40349 10.8435 1.33325 10.6667 1.33325H5.33333C5.15652 1.33325 4.98695 1.40349 4.86193 1.52851C4.7369 1.65354 4.66667 1.82311 4.66667 1.99992H3.33333C2.598 1.99992 2 2.59792 2 3.33325V13.3333C2 14.0686 2.598 14.6666 3.33333 14.6666ZM3.33333 3.33325H4.66667V4.66659H11.3333V3.33325H12.6667V13.3333H3.33333V3.33325Z" fill="#10B981"/>
+            <path d="M7.33331 9.05723L6.13798 7.8619L5.19531 8.80456L7.33331 10.9426L10.8046 7.47123L9.86198 6.52856L7.33331 9.05723Z" fill="#10B981"/>
+            </svg></span>Заказы
+        </x-nav-link>
+    </li>
+    <li>
+        <x-nav-link href="{{route('knowledge')}}" :active="request()->routeIs('knowledge')">
+           <span class="mr-2"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13.125 1.875H8.75C8.28724 1.87657 7.84163 2.05035 7.5 2.3625C7.15837 2.05035 6.71276 1.87657 6.25 1.875H1.875C1.70924 1.875 1.55027 1.94085 1.43306 2.05806C1.31585 2.17527 1.25 2.33424 1.25 2.5V11.875C1.25 12.0408 1.31585 12.1997 1.43306 12.3169C1.55027 12.4342 1.70924 12.5 1.875 12.5H5.47375C5.8025 12.5 6.125 12.6338 6.3575 12.8663L7.05813 13.5669C7.06375 13.5725 7.07125 13.5744 7.07687 13.58C7.13062 13.6294 7.19062 13.6731 7.26062 13.7025H7.26188C7.41435 13.7656 7.58565 13.7656 7.73812 13.7025H7.73938C7.80938 13.6731 7.86938 13.6294 7.92313 13.58C7.92875 13.5744 7.93625 13.5725 7.94187 13.5669L8.6425 12.8663C8.87744 12.6327 9.19496 12.5011 9.52625 12.5H13.125C13.2908 12.5 13.4497 12.4342 13.5669 12.3169C13.6842 12.1997 13.75 12.0408 13.75 11.875V2.5C13.75 2.33424 13.6842 2.17527 13.5669 2.05806C13.4497 1.94085 13.2908 1.875 13.125 1.875ZM5.47375 11.25H2.5V3.125H6.25C6.595 3.125 6.875 3.40563 6.875 3.75V11.6806C6.46091 11.4014 5.97319 11.2515 5.47375 11.25ZM12.5 11.25H9.52625C9.02687 11.25 8.53625 11.4037 8.125 11.6806V3.75C8.125 3.40563 8.405 3.125 8.75 3.125H12.5V11.25Z" fill="#10B981"/>
+            </svg></span> База знаний
+        </x-nav-link>
+    </li><li>
+        <x-nav-link href="{{route('dashboard')}}" :active="request()->routeIs('dashboard')">
+           <span class="mr-2"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7.9987 10.6667C9.46936 10.6667 10.6654 9.47071 10.6654 8.00004C10.6654 6.52937 9.46936 5.33337 7.9987 5.33337C6.52803 5.33337 5.33203 6.52937 5.33203 8.00004C5.33203 9.47071 6.52803 10.6667 7.9987 10.6667ZM7.9987 6.66671C8.72136 6.66671 9.33203 7.27737 9.33203 8.00004C9.33203 8.72271 8.72136 9.33337 7.9987 9.33337C7.27603 9.33337 6.66536 8.72271 6.66536 8.00004C6.66536 7.27737 7.27603 6.66671 7.9987 6.66671Z" fill="#10B981"/>
+            <path d="M1.8973 10.7574L2.56397 11.9107C2.91797 12.522 3.76997 12.7514 4.38397 12.3974L4.73664 12.1934C5.12233 12.4968 5.54758 12.7462 6.00064 12.9347V13.3334C6.00064 14.0687 6.59864 14.6667 7.33397 14.6667H8.6673C9.40264 14.6667 10.0006 14.0687 10.0006 13.3334V12.9347C10.4535 12.7461 10.8788 12.497 11.2646 12.194L11.6173 12.398C12.2326 12.7514 13.0826 12.5234 13.438 11.9107L14.104 10.758C14.2806 10.4518 14.3286 10.088 14.2372 9.74653C14.1458 9.40503 13.9226 9.11376 13.6166 8.93671L13.28 8.74204C13.3515 8.25041 13.3515 7.751 13.28 7.25937L13.6166 7.06471C13.9225 6.88753 14.1456 6.59626 14.2369 6.25481C14.3283 5.91336 14.2805 5.54961 14.104 5.24337L13.438 4.09071C13.084 3.47737 12.2326 3.24737 11.6173 3.60271L11.2646 3.80671C10.8789 3.50331 10.4537 3.2539 10.0006 3.06537V2.66671C10.0006 1.93137 9.40264 1.33337 8.6673 1.33337H7.33397C6.59864 1.33337 6.00064 1.93137 6.00064 2.66671V3.06537C5.54773 3.25393 5.12252 3.5031 4.73664 3.80604L4.38397 3.60204C3.76797 3.24804 2.9173 3.47737 2.5633 4.09004L1.8973 5.24271C1.72062 5.54891 1.67271 5.91271 1.76409 6.25422C1.85546 6.59572 2.07865 6.88699 2.38464 7.06404L2.7213 7.25871C2.64946 7.75009 2.64946 8.24932 2.7213 8.74071L2.38464 8.93537C2.07874 9.11268 1.85566 9.40407 1.7643 9.74562C1.67294 10.0872 1.72077 10.451 1.8973 10.7574ZM4.11464 8.91871C4.03936 8.61827 4.00108 8.30976 4.00064 8.00004C4.00064 7.69204 4.0393 7.38271 4.11397 7.08137C4.14913 6.94093 4.13756 6.79284 4.08103 6.65956C4.02449 6.52627 3.92606 6.41504 3.80064 6.34271L3.05197 5.90937L3.7173 4.75671L4.48064 5.19804C4.60512 5.27007 4.74961 5.29978 4.89241 5.28271C5.03522 5.26565 5.16864 5.20272 5.27264 5.10337C5.72365 4.67441 6.26752 4.35525 6.86197 4.17071C6.99852 4.12902 7.11808 4.04459 7.20305 3.92986C7.28802 3.81513 7.33391 3.67615 7.33397 3.53337V2.66671H8.6673V3.53337C8.66736 3.67615 8.71325 3.81513 8.79822 3.92986C8.88319 4.04459 9.00275 4.12902 9.1393 4.17071C9.73363 4.35551 10.2774 4.67464 10.7286 5.10337C10.8327 5.20252 10.9661 5.26532 11.1089 5.28238C11.2516 5.29945 11.3961 5.26986 11.5206 5.19804L12.2833 4.75737L12.95 5.91004L12.2006 6.34271C12.0753 6.41512 11.9769 6.52636 11.9204 6.65962C11.8639 6.79289 11.8523 6.94093 11.8873 7.08137C11.962 7.38271 12.0006 7.69204 12.0006 8.00004C12.0006 8.30737 11.962 8.61671 11.8866 8.91871C11.8516 9.05923 11.8634 9.20732 11.92 9.34059C11.9767 9.47386 12.0752 9.58506 12.2006 9.65737L12.9493 10.09L12.284 11.2427L11.5206 10.802C11.3962 10.7299 11.2517 10.7001 11.1088 10.7172C10.966 10.7343 10.8326 10.7973 10.7286 10.8967C10.2776 11.3257 9.73375 11.6448 9.1393 11.8294C9.00275 11.8711 8.88319 11.9555 8.79822 12.0702C8.71325 12.185 8.66736 12.3239 8.6673 12.4667L8.66864 13.3334H7.33397V12.4667C7.33391 12.3239 7.28802 12.185 7.20305 12.0702C7.11808 11.9555 6.99852 11.8711 6.86197 11.8294C6.26764 11.6446 5.72382 11.3254 5.27264 10.8967C5.16884 10.797 5.03534 10.7338 4.8924 10.7169C4.74946 10.6999 4.60489 10.7301 4.48064 10.8027L3.71797 11.244L3.0513 10.0914L3.80064 9.65737C3.9261 9.58506 4.0246 9.47386 4.08125 9.34059C4.13791 9.20732 4.14962 9.05923 4.11464 8.91871Z" fill="#10B981"/>
+            </svg></span> Настройки
+        </x-nav-link>
+    </li>
+</ul>

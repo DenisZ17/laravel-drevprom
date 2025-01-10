@@ -1,13 +1,7 @@
 @auth
 <x-app-layout>
     <div class="w-full">
-        @if ($errors->any())
-        <ul class="flex justify-center mb-3">
-            @foreach ($errors->all() as $error)
-            <li class="text-red-500 font-normal text-xs">{{$error}}</li>
-            @endforeach
-        </ul>
-        @endif
+        <x-validation-errors />
 
         <form class="w-56 mx-auto" action="{{route('detail.update', [
         'detail' => $detail

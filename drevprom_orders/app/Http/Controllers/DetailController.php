@@ -12,6 +12,14 @@ class DetailController extends Controller
     public function index() {
         return view('detail.index');
     }
+
+
+    public function show(Detail $detail) {
+        return view('detail.show', [
+            'detail' => $detail,
+        ]);
+    }
+
     public function create() {
 
         return view('detail.create', [

@@ -20,6 +20,7 @@ Route::get('/knowledge', KnowledgeController::class)->name('knowledge');
 
 Route::get('/detail/create', [DetailController::class, 'create'])->name('detail.create');
 Route::post('/detail', [DetailController::class, 'store'])->name('detail.store');
+Route::get('/detail/{detail}', [DetailController::class, 'show'])->name('detail.show');
 Route::get('detail/{detail}/edit', [DetailController::class, 'edit'])->name('detail.edit');
 Route::put('/detail/{detail}/update', [DetailController::class, 'update'])->name('detail.update');
 Route::delete('/detail/{detail}/destroy', [DetailController::class, 'destroy'])->name('detail.destroy');

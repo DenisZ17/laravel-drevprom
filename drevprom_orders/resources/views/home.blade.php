@@ -23,8 +23,8 @@
             @foreach ($shipments as $item)
             <div class="text-white mb-12">
                 <div
-                    class="px-5 py-3 max-w-64 flex justify-center items-center mx-auto mt-5 mb-5 box_shadow rounded-[20px] border border-slate-700">
-                    <span>
+                    class="px-4 py-2 max-w-64 flex justify-center items-center mx-auto mt-5 mb-5 box_shadow bg-slate-900 rounded-[20px] border border-slate-700">
+                    <span class="max-sm:text-sm">
                         Отгрузка {{Carbon\Carbon::parse($item->shipment_date)->format('d.m.Y')}}
                     </span>
                     @auth
@@ -60,15 +60,13 @@
                                 <th scope="col" class="px-6 py-3 max-lg:px-2 max-lg:py-2 max-lg:font-normal">
                                     Кол-во
                                 </th>
-                                <th scope="col"
-                                    class="px-6 py-3  max-lg:px-2 max-lg:py-2 max-lg:font-normal">
+                                <th scope="col" class="px-6 py-3  max-lg:px-2 max-lg:py-2 max-lg:font-normal">
                                     Статус
                                 </th>
                                 <th scope="col" class="px-6 py-3 max-lg:px-2 max-lg:py-2 max-lg:font-normal">
                                     Место
                                 </th>
-                                <th scope="col"
-                                    class="px-6 py-3  max-lg:px-2 max-lg:py-2 max-lg:font-normal">
+                                <th scope="col" class="px-6 py-3  max-lg:px-2 max-lg:py-2 max-lg:font-normal">
                                     Цвет
                                 </th>
                                 @auth
@@ -81,61 +79,7 @@
                         <tbody>
                             @foreach ($details as $detail)
                             @if ($item->id == $detail->shipment_id)
-                            <tr class=" odd:bg-gray-900  even:bg-gray-800 border-b border-gray-700 max-lg:text-[13px]">
-                                <th scope="row"
-                                    class="px-6 py-4 max-lg:px-2 max-lg:py-2 font-medium  whitespace-nowrap text-yellow-500">
-                                    {{ $detail->title }}
-                                </th>
-                                <td class="px-6 py-4 max-lg:px-2 max-lg:py-2">
-                                    {{$detail->order}}
-                                </td>
-                                <td class="px-6 py-4 max-lg:px-2 max-lg:py-2">
-                                    {{$detail->size}}
-                                </td>
-                                <td class="px-6 py-4 max-lg:px-2 max-lg:py-2">
-                                    {{$detail->quantity}}
-                                </td>
-                                <td class="px-6 py-4 max-lg:px-2 max-lg:py-2 text-emerald-500">
-                                    {{$detail->status}}
-                                </td>
-                                <td class="px-6 py-4 max-lg:px-2 max-lg:py-2">
-                                    {{$detail->place}}
-                                </td>
-                                <td class="px-6 py-4 max-lg:px-2 max-lg:py-2 text-cyan-500">
-                                    {{$detail->color}}
-                                </td>
-                                @auth<td class="px-3 py-2  max-lg:px-2 max-lg:py-2">
-                                    <div class="flex">
-                                        <a wire:navigate href="{{route('detail.edit', [
-                                        'detail'=> $detail])}}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" style="fill: #10b981;transform: ;msFilter:;">
-                                                <path
-                                                    d="m18.988 2.012 3 3L19.701 7.3l-3-3zM8 16h3l7.287-7.287-3-3L8 13z">
-                                                </path>
-                                                <path
-                                                    d="M19 19H8.158c-.026 0-.053.01-.079.01-.033 0-.066-.009-.1-.01H5V5h6.847l2-2H5c-1.103 0-2 .896-2 2v14c0 1.104.897 2 2 2h14a2 2 0 0 0 2-2v-8.668l-2 2V19z">
-                                                </path>
-                                            </svg></a>
-                                        <form class="ml-3" method="post"
-                                            action="{{route('detail.destroy', ['detail' => $detail])}}">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit" onclick="return confirm('Удалить деталь?')"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24"
-                                                    style="fill: rgb(175, 73, 73);transform: ;msFilter:;">
-                                                    <path
-                                                        d="M5 20a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8h2V6h-4V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2H3v2h2zM9 4h6v2H9zM8 8h9v12H7V8z">
-                                                    </path>
-                                                    <path d="M9 10h2v8H9zm4 0h2v8h-2z"></path>
-                                                </svg></button>
-                                        </form>
-                                    </div>
-
-                                </td>
-                                @endauth
-                            </tr>
+                            <x-home.tr-table-desktop :detail="$detail" />
                             @endif
                             @endforeach
                         </tbody>
@@ -168,89 +112,7 @@
                         <tbody>
                             @foreach ($details as $detail)
                             @if ($item->id == $detail->shipment_id)
-                            <tr class=" odd:bg-gray-900  even:bg-gray-800 border-b border-gray-700 text-[13px]">
-                                <td scope="row"
-                                    class="px-2 py-2">
-                                    <div class="text-yellow-500">{{ $detail->title }}</div>
-                                    <div>{{ $detail->size }}</div>
-
-                                </td>
-                                <td class="px-2 py-2">
-                                    <div>{{ $detail->order }}</div>
-                                    @auth
-
-                                    <div class="flex">
-                                        <a wire:navigate href="{{route('detail.edit', [
-                                        'detail'=> $detail])}}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
-                                                viewBox="0 0 22 22" style="fill: #10b981;transform: ;msFilter:;">
-                                                <path
-                                                    d="m18.988 2.012 3 3L19.701 7.3l-3-3zM8 16h3l7.287-7.287-3-3L8 13z">
-                                                </path>
-                                                <path
-                                                    d="M19 19H8.158c-.026 0-.053.01-.079.01-.033 0-.066-.009-.1-.01H5V5h6.847l2-2H5c-1.103 0-2 .896-2 2v14c0 1.104.897 2 2 2h14a2 2 0 0 0 2-2v-8.668l-2 2V19z">
-                                                </path>
-                                            </svg></a>
-                                        <form class="ml-3" method="post"
-                                            action="{{route('detail.destroy', ['detail' => $detail])}}">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit" onclick="return confirm('Удалить деталь?')"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="22" height="22"
-                                                    viewBox="0 0 22 22"
-                                                    style="fill: rgb(175, 73, 73);transform: ;msFilter:;">
-                                                    <path
-                                                        d="M5 20a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8h2V6h-4V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2H3v2h2zM9 4h6v2H9zM8 8h9v12H7V8z">
-                                                    </path>
-                                                    <path d="M9 10h2v8H9zm4 0h2v8h-2z"></path>
-                                                </svg></button>
-                                        </form>
-                                    </div>@endauth
-                                </td>
-                                <td class="px-2 py-2">
-                                    <div class="text-emerald-500">{{$detail->status}}</div>
-                                    <div>{{$detail->place}}</div>
-                                </td>
-
-                                <td class="px-2 py-2">
-                                    <div class="text-cyan-500">{{$detail->color}}</div>
-                                    <div>{{$detail->quantity}} шт.</div>
-
-                                </td>
-
-
-                                {{-- @auth<td class="px-3 py-2  max-lg:px-2 max-lg:py-2">
-                                    <div class="flex">
-                                        <a wire:navigate href="{{route('detail.edit', [
-                                        'detail'=> $detail])}}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" style="fill: #10b981;transform: ;msFilter:;">
-                                                <path
-                                                    d="m18.988 2.012 3 3L19.701 7.3l-3-3zM8 16h3l7.287-7.287-3-3L8 13z">
-                                                </path>
-                                                <path
-                                                    d="M19 19H8.158c-.026 0-.053.01-.079.01-.033 0-.066-.009-.1-.01H5V5h6.847l2-2H5c-1.103 0-2 .896-2 2v14c0 1.104.897 2 2 2h14a2 2 0 0 0 2-2v-8.668l-2 2V19z">
-                                                </path>
-                                            </svg></a>
-                                        <form class="ml-3" method="post"
-                                            action="{{route('detail.destroy', ['detail' => $detail])}}">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit" onclick="return confirm('Удалить деталь?')"><svg
-                                                    xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24"
-                                                    style="fill: rgb(175, 73, 73);transform: ;msFilter:;">
-                                                    <path
-                                                        d="M5 20a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8h2V6h-4V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2H3v2h2zM9 4h6v2H9zM8 8h9v12H7V8z">
-                                                    </path>
-                                                    <path d="M9 10h2v8H9zm4 0h2v8h-2z"></path>
-                                                </svg></button>
-                                        </form>
-                                    </div>
-
-                                </td>
-                                @endauth --}}
-                            </tr>
+                            <x-home.tr-table-mobile :detail="$detail" />
                             @endif
                             @endforeach
                         </tbody>
