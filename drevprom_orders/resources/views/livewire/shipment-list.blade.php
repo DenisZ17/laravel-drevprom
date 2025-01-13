@@ -1,3 +1,34 @@
-<div>
-    {{-- Close your eyes. Count to one. That is how long forever feels. --}}
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left rtl:text-right  text-gray-400">
+        <thead class=" bg-gray-700  text-gray-400">
+            <tr>
+                <th scope="col" class="px-5 py-3 font-normal max-sm:px-3 max-sm:py-2">
+                   <button class="flex items-center" wire:click="setSort()">
+                    Отгрузка
+                    <span class="ml-1">
+                        <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4.9998 7.34933H8.9968C9.21703 7.3521 9.43374 7.28614 9.6236 7.15856C9.81346 7.03098 9.96926 6.84662 10.0742 6.62533C10.1716 6.41942 10.2172 6.18668 10.2058 5.95297C10.1945 5.71925 10.1267 5.4937 10.0101 5.30133L8.01097 1.93333C7.89675 1.74764 7.74511 1.59608 7.56886 1.49146C7.3926 1.38683 7.19691 1.33221 6.9983 1.33221C6.79969 1.33221 6.604 1.38683 6.42774 1.49146C6.25149 1.59608 6.09985 1.74764 5.98563 1.93333L3.98655 5.30133C3.86986 5.4937 3.80209 5.71925 3.79076 5.95297C3.77943 6.18668 3.82499 6.41942 3.92238 6.62533C4.02729 6.84666 4.18308 7.03107 4.37295 7.15865C4.56282 7.28624 4.77956 7.35217 4.9998 7.34933ZM8.9968 8.65067H4.9998C4.77947 8.64775 4.56264 8.71371 4.37274 8.84144C4.18285 8.96916 4.02712 9.15378 3.92238 9.37533C3.82511 9.58117 3.77961 9.81377 3.79094 10.0474C3.80226 10.2809 3.86997 10.5064 3.98655 10.6987L5.98505 14.0653C6.09935 14.2509 6.25102 14.4023 6.42726 14.5069C6.6035 14.6114 6.79915 14.666 6.99772 14.666C7.19628 14.666 7.39193 14.6114 7.56818 14.5069C7.74442 14.4023 7.89608 14.2509 8.01038 14.0653L10.0095 10.6987C10.126 10.5064 10.1938 10.2809 10.2051 10.0474C10.2164 9.81377 10.1709 9.58117 10.0736 9.37533C9.96885 9.15398 9.81318 8.9695 9.62342 8.8418C9.43366 8.7141 9.217 8.64801 8.9968 8.65067Z" fill="#94A3B8"/>
+                            </svg>
+
+                    </span>
+                </button>
+
+                </th>
+                <th scope="col" class="px-5 py-3 font-normal max-sm:px-3 max-sm:py-2">
+                    Комменты
+                </th>
+                <th scope="col" class="px-5 py-3 font-normal max-sm:hidden max-sm:px-3 max-sm:py-2">
+                    Активна
+                </th>
+                <th scope="col" class="px-5 py-3 font-normal max-sm:px-3 max-sm:py-2">
+                    Редакт-ние
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($this->shipments as $item)
+            <x-shipments.shipment-table :item="$item" />
+            @endforeach
+        </tbody>
+    </table>
 </div>

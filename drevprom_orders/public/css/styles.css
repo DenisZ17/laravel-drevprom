@@ -51,15 +51,16 @@ body {
     justify-content: center;
     align-items: center;
     padding: 7px 18px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    /* border: 1px solid rgba(255, 255, 255, 0.2); */
     font-size: 14px;
     padding: 5px 15px;
-    border-radius: 4px;
+    /*  */
     background-color: transparent;
     transition: all .3s ease;
 }
 
     .header__link:hover {
+        border-radius: 4px;
         background-color: rgba(255, 255, 255, .1);
         -webkit-box-shadow: 0px 0px 4px 2px rgba(255,255,255,0.32);
 -moz-box-shadow: 0px 0px 4px 2px rgba(255,255,255,0.32);

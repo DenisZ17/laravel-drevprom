@@ -1,7 +1,14 @@
 <x-app-layout title="Dashboard">
+
   @auth   <div class="w-full mx-auto">
         @if (session()->has('shipment_added'))
         <x-dashboard.toast-shipment-create/>
+        @endif
+        @if (session()->has('success'))
+        <x-home.toast-delete-shipment />
+        @endif
+        @if (session()->has('successed'))
+        <x-home.toast-edit-shipment />
         @endif
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
 
@@ -20,7 +27,7 @@
                 </button>
             </div>
 
-            <x-shipments.shipment-table :shipments="$shipments"/>
+            <livewire:shipment-list />
         </div>
     </div>@endauth
     @guest
@@ -29,4 +36,5 @@
     </div>
 
     @endguest
+
 </x-app-layout>

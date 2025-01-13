@@ -27,7 +27,7 @@
 
 </head>
 
-<body class="font-sans antialiased bg-slate-900">
+<body class="font-sans antialiased bg-slate-900 relative flex flex-col min-h-full">
 
     @include('layouts.partials.header')
 

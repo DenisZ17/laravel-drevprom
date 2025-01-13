@@ -49,12 +49,12 @@ class ShipmentController extends Controller
             'active' => $request->active == 'on' ? 1 : 0,
         ]);
 
-        return redirect(to: route('home'))->with('successed', 'Отгрузка обновлена успешно!');
+        return redirect(to: route('dashboard'))->with('successed', 'Отгрузка обновлена успешно!');
     }
     public function destroy(Shipment $shipment)
     {
         $shipment->delete();
-        return redirect(to: route('home'))->with('success', 'Отгрузка удалена успешно!');
+        return redirect(to: route('dashboard'))->with('success', 'Отгрузка удалена успешно!');
     }
 
 }
