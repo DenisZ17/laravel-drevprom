@@ -52,6 +52,14 @@
                                 {{$detail->info}}
                             </td>
                         </tr>
+                        <tr class=" odd:bg-slate-900  even:bg-transparent ">
+                            <th scope="row" class="px-6 py-4 font-medium  whitespace-nowrap text-gray-400">
+                                Обновлено
+                            </th>
+                            <td class="px-6 py-4">
+                                {{Carbon\Carbon::parse($detail->updated_at)->format('d.m.Y H:i')}}
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             <a wire:navigate href="{{route('home')}}"

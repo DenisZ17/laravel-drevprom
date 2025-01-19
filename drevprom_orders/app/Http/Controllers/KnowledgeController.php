@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Element;
 use Illuminate\Http\Request;
 
 class KnowledgeController extends Controller
@@ -11,6 +12,8 @@ class KnowledgeController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return view('knowledge',[]);
+        return view('knowledge',[
+            'elements' => Element::orderBy('title')->get(),
+        ]);
     }
 }

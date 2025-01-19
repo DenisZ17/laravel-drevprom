@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DetailController;
+use App\Http\Controllers\ElementController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KnowledgeController;
 use App\Http\Controllers\ShipmentController;
@@ -24,6 +25,14 @@ Route::get('/detail/{detail}', [DetailController::class, 'show'])->name('detail.
 Route::get('detail/{detail}/edit', [DetailController::class, 'edit'])->name('detail.edit');
 Route::put('/detail/{detail}/update', [DetailController::class, 'update'])->name('detail.update');
 Route::delete('/detail/{detail}/destroy', [DetailController::class, 'destroy'])->name('detail.destroy');
+
+
+Route::get('/element/create', [ElementController::class, 'create'])->name('element.create');
+Route::post('/element', [ElementController::class, 'store'])->name('element.store');
+Route::get('/element/{element}', [ElementController::class, 'show'])->name('element.show');
+Route::get('element/{element}/edit', [ElementController::class, 'edit'])->name('element.edit');
+Route::put('/element/{element}/update', [ElementController::class, 'update'])->name('element.update');
+Route::delete('/element/{element}/destroy', [ElementController::class, 'destroy'])->name('element.destroy');
 
 Route::get('/dashboard', DashboardController::class)->name('dashboard');
 ;

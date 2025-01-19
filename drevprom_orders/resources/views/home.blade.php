@@ -37,7 +37,7 @@
                     </button>@endauth
                 </div>
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                    <table class="w-full text-sm text-left rtl:text-right text-gray-400 ">
+                    <table class="w-full text-sm text-left rtl:text-right text-gray-400 max-sm:hidden">
                         <thead class="text-sm font-medium  bg-gray-700 text-gray-400 max-lg:font-normal">
                             <tr>
                                 <th scope="col" class="px-6 py-3 max-lg:px-2 max-lg:py-2 max-lg:font-normal">
@@ -106,7 +106,7 @@
 
 
 
-                    {{-- <table class="w-full text-sm text-left rtl:text-right text-gray-400 sm:hidden">
+                    <table class="w-full text-sm text-left rtl:text-right text-gray-400 sm:hidden">
                         <thead class="text-[13px] bg-gray-700 text-gray-400">
                             <tr>
                                 <th scope="col" class="px-2 py-2 font-normal">
@@ -157,7 +157,7 @@
                             @endif
                             @endforeach
                         </tbody>
-                    </table> --}}
+                    </table>
 
                 </div>
 
