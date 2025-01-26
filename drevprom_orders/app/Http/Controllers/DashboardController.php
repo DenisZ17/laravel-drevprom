@@ -12,8 +12,8 @@ class DashboardController extends Controller
      */
     public function __invoke(Request $request)
     {
-       return view('dashboard', [
-'shipments' => Shipment::all(),
-       ]);
+        return view('dashboard', [
+            'shipments' => Shipment::all(),
+        ]);
     }
 }

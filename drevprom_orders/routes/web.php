@@ -19,6 +19,7 @@ Route::delete('/shipment/{shipment}/destroy', [ShipmentController::class, 'destr
 
 Route::get('/knowledge', KnowledgeController::class)->name('knowledge');
 
+Route::get('/detail', [DetailController::class, 'index'])->name('detail.index');
 Route::get('/detail/create', [DetailController::class, 'create'])->name('detail.create');
 Route::post('/detail', [DetailController::class, 'store'])->name('detail.store');
 Route::get('/detail/{detail}', [DetailController::class, 'show'])->name('detail.show');

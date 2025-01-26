@@ -32,6 +32,7 @@
                 <textarea type="text" name="info" id="default-input" value="{{$element->info}}" placeholder="Введите текст"
                     class=" border   text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-slate-300 focus:ring-emerald-500 focus:border-emerald-500">{{$element->info}}</textarea>
             </div>
+
             <button type="submit"
                 class="text-white focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-emerald-500 hover:bg-emerald-600 duration-200 focus:ring-emerald-700">Обновить
                 деталь</button>

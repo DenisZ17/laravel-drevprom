@@ -22,7 +22,7 @@ class HomeController extends Controller
     {
        return view('home', [
         'shipments' => Shipment::activeShipments()->orderBy("shipment_date", "asc")->get(),
-        'details' => Detail::orderBy($this->sortColumn, "asc")->get(),
+        'details' => Detail::activeDetails()->orderBy($this->sortColumn, "asc")->get(),
        ]);
     }
 }

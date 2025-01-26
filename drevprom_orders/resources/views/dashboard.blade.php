@@ -1,6 +1,7 @@
 <x-app-layout title="Dashboard">
 
   @auth   <div class="w-full mx-auto">
+    <a wire:navigate class="text-yellow-500 underline font-medium text-sm" href="{{route('detail.index')}}">Все действующие детали</a>
         @if (session()->has('shipment_added'))
         <x-dashboard.toast-shipment-create/>
         @endif

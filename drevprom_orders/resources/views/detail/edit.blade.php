@@ -66,6 +66,10 @@
                 <input type="text" value="{{$detail->info}}" name="info" id="default-input" placeholder="Например: Изолянт с 2-х стор."
                     class=" border   text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-slate-300 focus:ring-emerald-500 focus:border-emerald-500">
             </div>
+            <div class="flex items-center mb-6">
+                <input type="checkbox" id="detail_checkbox" name="active" {{ $detail->active==1?'checked':'' }} class="w-4 h-4 text-emerald-600 bg-gray-100 border-gray-300 rounded focus:ring-emerald-500 dark:focus:ring-emerald-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                <label for="detail_checkbox" class="ms-2 text-sm font-medium text-gray-300">Отгрузка активна</label>
+            </div>
 
             <button type="submit"
                 class="text-white focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-emerald-500 hover:bg-emerald-600 duration-200 focus:ring-emerald-700">Обновить

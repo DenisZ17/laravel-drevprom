@@ -10,7 +10,10 @@ use Illuminate\Http\Request;
 class DetailController extends Controller
 {
     public function index() {
-        return view('detail.index');
+        return view('detail.index', [
+
+            'details' => Detail::orderBy('order')->get(),
+        ]);
     }
 
 
@@ -64,7 +67,7 @@ class DetailController extends Controller
                 'quantity' => 'required',
                 'color' => 'required',
                 'info' => 'max:50',
-                'active' => 'boolean',
+
         ]);
         $detail->update([
             'title' => $request->title,
@@ -76,6 +79,7 @@ class DetailController extends Controller
                 'quantity' => $request->quantity,
                 'color' => $request->color,
                 'info' => $request->info,
+                'active' => $request->active == 'on' ? 1 : 0,
         ]);
         return redirect(route('home'))->with('detail_update', 'Деталь успешно обновлена!');
     }
